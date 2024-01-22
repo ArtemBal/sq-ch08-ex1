@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,6 +24,7 @@ class MainTests {
 	void testPageRequestAndContent() throws Exception {
 		mockMvc.perform(get("/home")).andExpect(status().isOk());
 	}
+
 	@Test
 	@DisplayName("Test that request parameters are get successfully.")
 	void testRequestParameters() throws Exception {
@@ -30,5 +32,12 @@ class MainTests {
 				.andExpect(status().isOk())
 				.andExpect(model().attribute("username", "Artem"))
 				.andExpect(model().attribute("color", "green"));
+	}
+
+	@Test
+	@DisplayName("Test that path variables are added successfully")
+	void testPathVariables() throws Exception {
+		mockMvc.perform(get("/homePP/blue"))
+				.andExpect(model().attribute("color", "blue"));
 	}
 }
