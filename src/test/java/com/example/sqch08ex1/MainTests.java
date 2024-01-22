@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +21,11 @@ class MainTests {
 	@Test
 	@DisplayName("Test that /home page can be successfully called.")
 	void testPageRequestAndContent() throws Exception {
+		mockMvc.perform(get("/home")).andExpect(status().isOk());
+	}
+	@Test
+	@DisplayName("Test that request parameters are get successfully.")
+	void testRequestParameters() throws Exception {
 		mockMvc.perform(get("/home?color=green&name=Artem"))
 				.andExpect(status().isOk())
 				.andExpect(model().attribute("username", "Artem"))
